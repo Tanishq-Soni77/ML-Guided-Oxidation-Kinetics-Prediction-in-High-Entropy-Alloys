@@ -1,0 +1,18 @@
+FIX 1 — GroupKFold(5) Hyperparameter Tuning
+=======================================================
+
+[Stage 1] ExtraTreesClassifier | GroupKFold(5) | f1_macro
+  Best params  : {'n_estimators': 200, 'min_samples_split': 5, 'max_depth': None, 'class_weight': None}
+  CV macro-F1  : 0.6736
+  Test accuracy: 0.7619  |  Test macro-F1: 0.7531
+    Linear        : 0.4444
+    Parabolic     : 0.8148
+    HigherOrder   : 1.0000
+
+[Stage 2] XGBoost Regressor | GroupKFold(5) | r2
+  Best params    : {'subsample': 0.9, 'reg_lambda': 2, 'reg_alpha': 1.0, 'n_estimators': 700, 'min_child_weight': 3, 'max_depth': 5, 'learning_rate': 0.01, 'colsample_bytree': 0.7}
+  CV R²          : 0.2819
+  Test R²(log-k) : 0.6154
+  Test R²(raw-k) : 0.3940
+  Test RMSE      : 17.067043
+  Test MAE       : 11.430371

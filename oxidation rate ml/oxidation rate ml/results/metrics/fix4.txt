@@ -1,0 +1,23 @@
+FIX 4 — Leakage Isolation
+=======================================================
+
+Exp1: Random train_test_split  | 15 features | direct regression
+Exp2: GroupShuffleSplit        | 15 features | direct regression
+Exp3: GroupShuffleSplit        | 19 features | ETC → XGB pipeline
+
+  Exp     Split         Model                    S1 metric       R²(log-k)    R²(raw-k)
+  ──────────────────────────────────────────────────────────────────────
+  Exp1    Random        ExtraTreesRegressor      N/A                0.9993       0.9980
+  Exp1    Random        RandomForestRegressor    N/A                0.9682       0.8842
+  Exp2    GroupShuffle  ExtraTreesRegressor      N/A                0.6622       0.7363
+  Exp2    GroupShuffle  RandomForestRegressor    N/A                0.6075       0.6464
+  Exp3    GroupShuffle  ETC → XGBRegressor       F1=0.753           0.6154       0.3940
+
+  Leakage effect   (Exp1-ETR → Exp2-ETR): ΔR²(log-k) = +0.3372
+  Architecture eff (Exp2-ETR → Exp3):      ΔR²(log-k) = +0.0468
+  Total            (Exp1-ETR → Exp3):      ΔR²(log-k) = +0.3840
+
+  NOTE: positive leakage effect = random split inflated R² (test
+  alloys overlap with training alloys → memorisation, not generalisation).
+  Architecture effect: improvement from full 2-stage pipeline + 19 feats
+  over direct regression on 15 raw features with group-aware split.

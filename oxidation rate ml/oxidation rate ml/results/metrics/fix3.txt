@@ -1,0 +1,17 @@
+FIX 3 — Ablation: S2 Feature-Set Comparison (seed=42)
+=======================================================
+
+  S1 macro-F1 (used in A & C): 0.7531
+
+  Variant                                  R²(log-k)   R²(raw-k)        RMSE         MAE
+  ──────────────────────────────────────────────────────────────────────
+  A: 18-feat + predicted_n (S1)               0.6154      0.3940   17.067043   11.430371
+  B: 18-feat only  (no S1)                    0.6490      0.5273   15.072997   10.549154
+  C: 18-feat + true n_class (oracle)          0.4530     -0.2286   24.301077   15.918902
+
+───────────────────────────────────────────────────────
+A = current pipeline (S1 → predicted_n → S2)
+B = S2 trained on composition only, no kinetics class input
+C = oracle upper bound (true label fed to S2, not predicted)
+Gap A→C = information ceiling from perfect S1 classification
+Gap B→A = marginal gain from adding S1 predicted_n
